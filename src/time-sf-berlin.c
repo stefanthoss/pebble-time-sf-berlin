@@ -7,6 +7,8 @@
 	
 #define CITY1 "San Francisco"
 #define CITY2 "Berlin"
+	
+#define TIME_DIFFERENCE 9
 
 #define MY_UUID {0xf2, 0x09, 0xc2, 0x9a, 0x14, 0x04, 0x83, 0x19, 0xbb, 0xfb, 0xb1, 0x8c, 0x9a, 0x9a, 0x19, 0x0f}
 
@@ -102,8 +104,10 @@ void handle_minute_tick(AppContextRef ctx, PebbleTickEvent *t) {
 
   char *time_format;
 
-  text_layer_set_text(&text_day_change_layer, day_change_text);
-
+  // Add +1 if the 2nd city's date is already tomorrow
+  if((t->tick_time->tm_hour + TIME_DIFFERENCE) > 24) {
+    text_layer_set_text(&text_day_change_layer, day_change_text);
+  }
 
   if (clock_is_24h_style()) {
     time_format = "%R";
