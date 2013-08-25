@@ -2,7 +2,7 @@
 #include "pebble_app.h"
 #include "pebble_fonts.h"
 	
-#define TITLE "time-sf-berlin"
+#define TITLE "Time SF Berlin"
 #define AUTHOR "Stefan Thoss"
 
 #define MY_UUID {0xf2, 0x09, 0xc2, 0x9a, 0x14, 0x04, 0x83, 0x19, 0xbb, 0xfb, 0xb1, 0x8c, 0x9a, 0x9a, 0x19, 0x0f}
@@ -23,8 +23,9 @@ void line_layer_update_callback(Layer *me, GContext* ctx) {
 
   graphics_context_set_stroke_color(ctx, GColorWhite);
 
-  graphics_draw_line(ctx, GPoint(8, 38), GPoint(144-16, 38));
+  graphics_draw_line(ctx, GPoint(8, 35), GPoint(144-16, 35));
 
+  graphics_draw_line(ctx, GPoint(8, 119), GPoint(144-16, 1119));
 }
 
 
@@ -40,7 +41,7 @@ void handle_init(AppContextRef ctx) {
   text_layer_init(&text_date1_layer, window.layer.frame);
   text_layer_set_text_color(&text_date1_layer, GColorWhite);
   text_layer_set_background_color(&text_date1_layer, GColorClear);
-  layer_set_frame(&text_date1_layer.layer, GRect(10, 8, 144-10, 168-8));
+  layer_set_frame(&text_date1_layer.layer, GRect(10, 4, 144-10, 168-4));
   text_layer_set_font(&text_date1_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_21)));
   layer_add_child(&window.layer, &text_date1_layer.layer);
 
@@ -48,9 +49,26 @@ void handle_init(AppContextRef ctx) {
   text_layer_init(&text_time1_layer, window.layer.frame);
   text_layer_set_text_color(&text_time1_layer, GColorWhite);
   text_layer_set_background_color(&text_time1_layer, GColorClear);
-  layer_set_frame(&text_time1_layer.layer, GRect(8, 32, 144-8, 168-32));
+  layer_set_frame(&text_time1_layer.layer, GRect(8, 26, 144-8, 168-26));
   text_layer_set_font(&text_time1_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_SUBSET_49)));
   layer_add_child(&window.layer, &text_time1_layer.layer);
+
+	
+  // 2nd date (Berlin)
+  text_layer_init(&text_date2_layer, window.layer.frame);
+  text_layer_set_text_color(&text_date2_layer, GColorWhite);
+  text_layer_set_background_color(&text_date2_layer, GColorClear);
+  layer_set_frame(&text_date2_layer.layer, GRect(10, 88, 144-10, 168-88));
+  text_layer_set_font(&text_date2_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_21)));
+  layer_add_child(&window.layer, &text_date2_layer.layer);
+
+  // 2nd time (Berlin)
+  text_layer_init(&text_time2_layer, window.layer.frame);
+  text_layer_set_text_color(&text_time2_layer, GColorWhite);
+  text_layer_set_background_color(&text_time2_layer, GColorClear);
+  layer_set_frame(&text_time2_layer.layer, GRect(8, 110, 144-8, 168-110));
+  text_layer_set_font(&text_time2_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_SUBSET_49)));
+  layer_add_child(&window.layer, &text_time2_layer.layer);
 
 
   layer_init(&line_layer, window.layer.frame);
@@ -74,6 +92,7 @@ void handle_minute_tick(AppContextRef ctx, PebbleTickEvent *t) {
   // TODO: Only update the date when it's changed.
   string_format_time(date_text, sizeof(date_text), "%B %e", t->tick_time);
   text_layer_set_text(&text_date1_layer, date_text);
+  text_layer_set_text(&text_date2_layer, date_text);
 
 
   if (clock_is_24h_style()) {
@@ -91,6 +110,7 @@ void handle_minute_tick(AppContextRef ctx, PebbleTickEvent *t) {
   }
 
   text_layer_set_text(&text_time1_layer, time_text);
+  text_layer_set_text(&text_time2_layer, time_text);
 
 }
 

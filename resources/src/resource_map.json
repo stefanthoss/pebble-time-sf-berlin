@@ -1,25 +1,22 @@
-
-{"friendlyVersion": "VERSION",
- "versionDefName": "APP_RESOURCES",
- "media": [
+{
+    "media": [
         {
-        "type": "png",
-        "defName": "IMAGE_MENU_ICON",
-        "file": "images/menu_icon_time-sf-berlin.png"
+            "characterRegex": "[:0-9]",
+            "defName": "FONT_ROBOTO_BOLD_SUBSET_49",
+            "type": "font",
+            "file": "fonts/Roboto-Bold.ttf"
         },
-
         {
-        "type": "font",
-        "defName": "FONT_ROBOTO_CONDENSED_21",
-        "file": "fonts/Roboto-Condensed.ttf"
+            "defName": "FONT_ROBOTO_CONDENSED_21",
+            "type": "font",
+            "file": "fonts/Roboto-Condensed.ttf"
         },
-
         {
-        "type": "font",
-        "characterRegex": "[:0-9]",
-        "defName": "FONT_ROBOTO_BOLD_SUBSET_49",
-        "file": "fonts/Roboto-Bold.ttf"
+            "defName": "IMAGE_MENU_ICON",
+            "type": "png",
+            "file": "images/menu_icon_time-sf-berlin.png"
         }
-
- ]
+    ],
+    "friendlyVersion": "VERSION",
+    "versionDefName": "APP_RESOURCES"
 }
