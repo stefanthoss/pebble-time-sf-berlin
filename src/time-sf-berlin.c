@@ -16,8 +16,7 @@ Window window;
 
 TextLayer text_city1_layer;
 TextLayer text_city2_layer;
-TextLayer text_date1_layer;
-TextLayer text_date2_layer;
+TextLayer text_day_change_layer;
 TextLayer text_time1_layer;
 TextLayer text_time2_layer;
 
@@ -28,9 +27,9 @@ void line_layer_update_callback(Layer *me, GContext* ctx) {
 
   graphics_context_set_stroke_color(ctx, GColorWhite);
 
-  graphics_draw_line(ctx, GPoint(8, 35), GPoint(144-16, 35));
+  graphics_draw_line(ctx, GPoint(8, 34), GPoint(144-16, 34));
 
-  graphics_draw_line(ctx, GPoint(8, 119), GPoint(144-16, 119));
+  graphics_draw_line(ctx, GPoint(8, 118), GPoint(144-16, 118));
 }
 
 
@@ -51,14 +50,6 @@ void handle_init(AppContextRef ctx) {
   layer_add_child(&window.layer, &text_city1_layer.layer);
   text_layer_set_text(&text_city1_layer, CITY1);
 
-  // 1st date
-  // text_layer_init(&text_date1_layer, window.layer.frame);
-  // text_layer_set_text_color(&text_date1_layer, GColorWhite);
-  // text_layer_set_background_color(&text_date1_layer, GColorClear);
-  // layer_set_frame(&text_date1_layer.layer, GRect(10, 4, 144-10, 168-4));
-  // text_layer_set_font(&text_date1_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_21)));
-  // layer_add_child(&window.layer, &text_date1_layer.layer);
-
   // 1st time
   text_layer_init(&text_time1_layer, window.layer.frame);
   text_layer_set_text_color(&text_time1_layer, GColorWhite);
@@ -68,22 +59,22 @@ void handle_init(AppContextRef ctx) {
   layer_add_child(&window.layer, &text_time1_layer.layer);
 
 
-  // 2nd city
+  // 2nd city (smaller label)
   text_layer_init(&text_city2_layer, window.layer.frame);
   text_layer_set_text_color(&text_city2_layer, GColorWhite);
   text_layer_set_background_color(&text_city2_layer, GColorClear);
-  layer_set_frame(&text_city2_layer.layer, GRect(10, 88, 144-10, 168-88));
+  layer_set_frame(&text_city2_layer.layer, GRect(10, 88, 144-34, 168-88));
   text_layer_set_font(&text_city2_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_21)));
   layer_add_child(&window.layer, &text_city2_layer.layer);
   text_layer_set_text(&text_city2_layer, CITY2);
 
-  // 2nd date
-  // text_layer_init(&text_date2_layer, window.layer.frame);
-  // text_layer_set_text_color(&text_date2_layer, GColorWhite);
-  // text_layer_set_background_color(&text_date2_layer, GColorClear);
-  // layer_set_frame(&text_date2_layer.layer, GRect(10, 88, 144-10, 168-88));
-  // text_layer_set_font(&text_date2_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_21)));
-  // layer_add_child(&window.layer, &text_date2_layer.layer);
+  // day change indicator
+  text_layer_init(&text_day_change_layer, window.layer.frame);
+  text_layer_set_text_color(&text_day_change_layer, GColorWhite);
+  text_layer_set_background_color(&text_day_change_layer, GColorClear);
+  layer_set_frame(&text_day_change_layer.layer, GRect(144-34, 88, 34-10, 168-88));
+  text_layer_set_font(&text_day_change_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_21)));
+  layer_add_child(&window.layer, &text_day_change_layer.layer);
 
   // 2nd time
   text_layer_init(&text_time2_layer, window.layer.frame);
@@ -107,15 +98,11 @@ void handle_minute_tick(AppContextRef ctx, PebbleTickEvent *t) {
 
   // Need to be static because they're used by the system later.
   static char time_text[] = "00:00";
-  static char date_text[] = "Xxxxxxxxx 00";
+  static char day_change_text[] = "+1";
 
   char *time_format;
 
-
-  // TODO: Only update the date when it's changed.
-  string_format_time(date_text, sizeof(date_text), "%B %e", t->tick_time);
-  // text_layer_set_text(&text_date1_layer, date_text);
-  // text_layer_set_text(&text_date2_layer, date_text);
+  text_layer_set_text(&text_day_change_layer, day_change_text);
 
 
   if (clock_is_24h_style()) {
