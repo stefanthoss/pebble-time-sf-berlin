@@ -12,7 +12,7 @@
 
 #define MY_UUID {0xf2, 0x09, 0xc2, 0x9a, 0x14, 0x04, 0x83, 0x19, 0xbb, 0xfb, 0xb1, 0x8c, 0x9a, 0x9a, 0x19, 0x0f}
 
-PBL_APP_INFO(MY_UUID, TITLE, AUTHOR, 1, 0, DEFAULT_MENU_ICON, APP_INFO_WATCH_FACE);
+PBL_APP_INFO(MY_UUID, TITLE, AUTHOR, 1, 0, RESOURCE_ID_IMAGE_MENU_ICON, APP_INFO_WATCH_FACE);
 
 Window window;
 
@@ -56,7 +56,7 @@ void handle_init(AppContextRef ctx) {
   text_layer_init(&text_time1_layer, window.layer.frame);
   text_layer_set_text_color(&text_time1_layer, GColorWhite);
   text_layer_set_background_color(&text_time1_layer, GColorClear);
-  layer_set_frame(&text_time1_layer.layer, GRect(8, 26, 144-8, 168-26));
+  layer_set_frame(&text_time1_layer.layer, GRect(6, 26, 144-6, 168-26));
   text_layer_set_font(&text_time1_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_SUBSET_49)));
   layer_add_child(&window.layer, &text_time1_layer.layer);
 
@@ -82,7 +82,7 @@ void handle_init(AppContextRef ctx) {
   text_layer_init(&text_time2_layer, window.layer.frame);
   text_layer_set_text_color(&text_time2_layer, GColorWhite);
   text_layer_set_background_color(&text_time2_layer, GColorClear);
-  layer_set_frame(&text_time2_layer.layer, GRect(8, 110, 144-8, 168-110));
+  layer_set_frame(&text_time2_layer.layer, GRect(6, 110, 144-6, 168-110));
   text_layer_set_font(&text_time2_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_SUBSET_49)));
   layer_add_child(&window.layer, &text_time2_layer.layer);
 
@@ -113,7 +113,7 @@ void handle_minute_tick(AppContextRef ctx, PebbleTickEvent *t) {
   if(tick_time2.tm_hour > 24) {
 	tick_time2.tm_hour -= 24;
 
-    // Add day change indicator to city
+    // Add day change indicator to 2nd city
     text_layer_set_text(&text_day_change_layer, day_change_text);
   }
 
@@ -126,18 +126,16 @@ void handle_minute_tick(AppContextRef ctx, PebbleTickEvent *t) {
   string_format_time(time1_text, sizeof(time1_text), time_format, (const PblTm* const) &tick_time1);
   string_format_time(time2_text, sizeof(time2_text), time_format, (const PblTm* const) &tick_time2);
 
-  // Kludge to handle lack of non-padded hour format string
-  // for twelve hour clock.
+  // Kludge to handle lack of non-padded hour format string for twelve hour clock.
   if (!clock_is_24h_style() && (time1_text[0] == '0')) {
     memmove(time1_text, &time1_text[1], sizeof(time1_text) - 1);
   }
   if (!clock_is_24h_style() && (time2_text[0] == '0')) {
     memmove(time2_text, &time2_text[1], sizeof(time2_text) - 1);
   }
-
+	
   text_layer_set_text(&text_time1_layer, time1_text);
   text_layer_set_text(&text_time2_layer, time2_text);
-
 }
 
 
