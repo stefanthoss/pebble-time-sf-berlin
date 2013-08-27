@@ -1,10 +1,9 @@
 {
     "media": [
         {
-            "characterRegex": "[:0-9]",
-            "defName": "FONT_ROBOTO_BOLD_SUBSET_49",
-            "type": "font",
-            "file": "fonts/Roboto-Bold.ttf"
+            "defName": "IMAGE_MENU_ICON",
+            "type": "png",
+            "file": "images/menu_icon_time-sf-berlin.png"
         },
         {
             "defName": "FONT_ROBOTO_CONDENSED_21",
@@ -12,9 +11,10 @@
             "file": "fonts/Roboto-Condensed.ttf"
         },
         {
-            "defName": "IMAGE_MENU_ICON",
-            "type": "png",
-            "file": "images/menu_icon_time-sf-berlin.png"
+            "characterRegex": "[:0-9]",
+            "defName": "FONT_ROBOTO_BOLD_SUBSET_49",
+            "type": "font",
+            "file": "fonts/Roboto-Bold.ttf"
         }
     ],
     "friendlyVersion": "VERSION",

@@ -29,9 +29,9 @@ void line_layer_update_callback(Layer *me, GContext* ctx) {
 
   graphics_context_set_stroke_color(ctx, GColorWhite);
 
-  graphics_draw_line(ctx, GPoint(8, 34), GPoint(144-16, 34));
+  graphics_draw_line(ctx, GPoint(8, 33), GPoint(144-16, 33));
 
-  graphics_draw_line(ctx, GPoint(8, 118), GPoint(144-16, 118));
+  graphics_draw_line(ctx, GPoint(8, 117), GPoint(144-16, 117));
 }
 
 
@@ -102,6 +102,7 @@ void handle_minute_tick(AppContextRef ctx, PebbleTickEvent *t) {
   static char time1_text[] = "00:00";
   static char time2_text[] = "00:00";
   static char day_change_text[] = "+1";
+  static char empty_text[] = "";
 
   char *time_format;
 	
@@ -110,11 +111,14 @@ void handle_minute_tick(AppContextRef ctx, PebbleTickEvent *t) {
   tick_time2.tm_hour += TIME_DIFFERENCE;
 
   // Handle 2nd city's date is already tomorrow
-  if(tick_time2.tm_hour > 24) {
+  if(tick_time2.tm_hour > 23) {
 	tick_time2.tm_hour -= 24;
 
     // Add day change indicator to 2nd city
     text_layer_set_text(&text_day_change_layer, day_change_text);
+  } else {
+    // Remove day change indicator from 2nd city
+    text_layer_set_text(&text_day_change_layer, empty_text);
   }
 
   if (clock_is_24h_style()) {
